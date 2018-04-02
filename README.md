@@ -16,3 +16,4 @@ npm run dev
 # build for production with minification
 npm run build
 ```
+10.0.0.0/16, 10.0.0.1/24

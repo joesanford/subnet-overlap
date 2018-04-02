@@ -1,9 +1,13 @@
 <template>
   <div id="app">
-    <span>CIDR Overlap Finder</span>
-    <p style="white-space: pre-line;">{{ message }}</p>
-    <br>
-    <textarea v-model="message" placeholder="1.2.3.4/16, 5.6.7.8/32"></textarea>
+  <span>CIDR Overlap Finder</span>
+    <form @submit.prevent="onSubmit">
+      <label>
+        <input type="text" v-model="cidrs" width="50"/>
+      </label><br>
+      <button type="submit">Submit</button>
+    </form>
+    Results: {{ results }}
   </div>
 </template>
 
@@ -11,10 +15,16 @@
   const { findOverlaps } = require('./utils')
 
   export default {
-    name: 'app',
+    name: 'subnet-overlap',
     data () {
       return {
-        message: ''
+        results: '',
+        cidrs: ''
+      }
+    },
+    methods: {
+      onSubmit() {
+        this.results = findOverlaps(this.cidrs)
       }
     }
   }

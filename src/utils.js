@@ -3,28 +3,39 @@ const IPCidr = require('ip-cidr'),
 
 const findOverlaps = cidrs => {
   const ipOverlaps = [];
+  try {
+    cidrs = cidrs.split(' ').join('');
+    cidrs = cidrs.split(',');
+    cidrs.forEach(cidr => {
+      const cidrSubnet = Addr(cidr),
+        restCidrs = cidrs.splice(cidrs.indexOf(cidr), cidrs.length).filter(e => e !== cidr);
+      console.log('current: ', cidrSubnet);
+      console.log('rest: ', restCidrs);
 
-  cidrs.forEach(cidr => {
-    const cidrSubnet = Addr(cidr),
-      restCidrs = cidrs.splice(cidrs.indexOf(cidr), cidrs.length).filter(e => e !== cidr);
+      restCidrs.forEach(restCidr => {
+        const restCidrSubnet = Addr(restCidr),
+          subnetIntersection = restCidrSubnet.intersect(cidrSubnet);
 
-    restCidrs.forEach(restCidr => {
-      const restCidrSubnet = Addr(restCidr),
-        subnetIntersection = cidrSubnet.intersect(restCidrSubnet);
+        console.log('intersect: ', subnetIntersection);
 
-      if (subnetIntersection) {
-        const intersectionCidr = new IPCidr(subnetIntersection.toString());
+        if (subnetIntersection) {
+          const intersectionCidr = new IPCidr(subnetIntersection.toString());
 
-        ipOverlaps.push({
-          intersectionStart: intersectionCidr.start(),
-          intersectionEnd: intersectionCidr.end(),
-          cidr1: cidr,
-          cidr2: restCidr
-        });
-      }
+          ipOverlaps.push({
+            name: intersectionCidr.cidr,
+            intersectionStart: intersectionCidr.start(),
+            intersectionEnd: intersectionCidr.end(),
+            cidr1: cidr,
+            cidr2: restCidr
+          });
+        }
+      });
     });
-  });
+  } catch (e) {
+    ipOverlaps.push(e.toString());
+  }
 
+  console.log('results' + ipOverlaps);
   return ipOverlaps;
 };
 
