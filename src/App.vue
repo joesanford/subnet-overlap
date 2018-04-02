@@ -8,13 +8,13 @@
 </template>
 
 <script>
-  const { findOverlaps } = require('./cidr')
+  const { findOverlaps } = require('./utils')
 
   export default {
     name: 'app',
     data () {
       return {
-        message: printStuff()
+        message: ''
       }
     }
   }

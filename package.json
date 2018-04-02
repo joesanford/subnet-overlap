@@ -1,6 +1,6 @@
 {
-  "name": "subnet-overlap2",
-  "description": "A Vue.js project",
+  "name": "subnet-overlap",
+  "description": "A Vue.js app for finding overlaps in IP subnet ranges",
   "version": "1.0.0",
   "author": "Joe Sanford <josephsanford@gmail.com>",
   "license": "MIT",
@@ -12,7 +12,6 @@
   "dependencies": {
     "ip-cidr": "^1.1.2",
     "netaddr": "^1.1.0",
-    "npm": "^5.8.0",
     "vue": "^2.5.11"
   },
   "browserslist": [
