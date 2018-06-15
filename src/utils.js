@@ -9,20 +9,15 @@ const findOverlaps = cidrs => {
     cidrs.forEach(cidr => {
       const cidrSubnet = Addr(cidr),
         restCidrs = cidrs.splice(cidrs.indexOf(cidr), cidrs.length).filter(e => e !== cidr);
-      console.log('current: ', cidrSubnet);
-      console.log('rest: ', restCidrs);
 
       restCidrs.forEach(restCidr => {
         const restCidrSubnet = Addr(restCidr),
           subnetIntersection = restCidrSubnet.intersect(cidrSubnet);
 
-        console.log('intersect: ', subnetIntersection);
-
         if (subnetIntersection) {
           const intersectionCidr = new IPCidr(subnetIntersection.toString());
 
           ipOverlaps.push({
-            name: intersectionCidr.cidr,
             intersectionStart: intersectionCidr.start(),
             intersectionEnd: intersectionCidr.end(),
             cidr1: cidr,
@@ -35,7 +30,6 @@ const findOverlaps = cidrs => {
     ipOverlaps.push(e.toString());
   }
 
-  console.log('results' + ipOverlaps);
   return ipOverlaps;
 };
 

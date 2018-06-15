@@ -3,11 +3,15 @@
   <span>CIDR Overlap Finder</span>
     <form @submit.prevent="onSubmit">
       <label>
-        <input type="text" v-model="cidrs" width="50"/>
+        <input type="text" v-model="cidrs" width="250"/>
       </label><br>
       <button type="submit">Submit</button>
     </form>
-    Results: {{ results }}
+    <ul>
+      <li v-for="result in overlaps">
+        {{ result }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -18,13 +22,12 @@
     name: 'subnet-overlap',
     data () {
       return {
-        results: '',
-        cidrs: ''
+        overlaps: null
       }
     },
     methods: {
       onSubmit() {
-        this.results = findOverlaps(this.cidrs)
+        this.overlaps = findOverlaps(this.cidrs)
       }
     }
   }
@@ -38,20 +41,6 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
 }
 
 a {
